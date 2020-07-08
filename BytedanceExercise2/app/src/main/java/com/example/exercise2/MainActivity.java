@@ -7,29 +7,28 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.OrientationEventListener;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.google.android.material.tabs.TabLayout;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+import com.tencent.map.geolocation.TencentLocationManager;
+import com.tencent.map.geolocation.TencentLocationRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
     List<String> list_title;
     OrientationEventListener myOrientoinListener;
     Context mContext;
+    TencentLocationManager mLocationManager;
+    TencentLocationRequest mLocationRequest;
+    MyLocationListener mLocationListener;
+    Interests interestsPage;
+    MessageFragment messagePage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,23 +56,32 @@ public class MainActivity extends AppCompatActivity {
         mContext=this;
         initTabs();
         myOrientoinListener = new MyOrientoinListener(this);
-        myOrientoinListener.enable();
-
+        //myOrientoinListener.enable();
+        mLocationListener = new MyLocationListener();
+        mLocationManager = TencentLocationManager.getInstance(this);
+        mLocationRequest = TencentLocationRequest.create();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setAllowGPS(true);
+        mLocationRequest.setRequestLevel(TencentLocationRequest. REQUEST_LEVEL_ADMIN_AREA);
+        mLocationManager.requestLocationUpdates(mLocationRequest, mLocationListener);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         //销毁时取消监听
         myOrientoinListener.disable();
+        mLocationManager.removeUpdates(mLocationListener);
     }
     private void initTabs(){
         fAdapter = new MyAdapter(getSupportFragmentManager());
         //页面，数据源
         list_fragment = new ArrayList<>();
         list_fragment.add(new PlaceHolder());
+        interestsPage=new Interests();
+        list_fragment.add(interestsPage);
         list_fragment.add(new PlaceHolder());
-        list_fragment.add(new PlaceHolder());
-        list_fragment.add(new MessageFragment());
+        messagePage= new MessageFragment();
+        list_fragment.add(messagePage);
         list_fragment.add(new PlaceHolder());
         list_title = new ArrayList<>();
         list_title.add("首页");
@@ -107,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 title=list_title.get(position);
             }
             SpannableString spannableString = new SpannableString(title);
+            //设置第三个tab的图片
             if(position==2)
             {
                 drawable = ContextCompat.getDrawable(mContext, R.drawable.middle);
@@ -152,6 +166,25 @@ public class MainActivity extends AppCompatActivity {
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
                 }
             }
+        }
+
+    }
+    public class MyLocationListener extends Activity implements TencentLocationListener {
+
+        @Override
+        public void onLocationChanged(TencentLocation location, int error, String reason) {
+            if(error!=TencentLocation.ERROR_OK)
+            {
+                Log.d("locationlistener","获取位置失败,错误码:"+String.valueOf(error));
+                return;
+            }
+            Log.d("location",location.getCity());
+            interestsPage.location.setText(location.getCity());
+        }
+
+        @Override
+        public void onStatusUpdate(String name, int status, String desc) {
+            // do your work
         }
     }
 }
