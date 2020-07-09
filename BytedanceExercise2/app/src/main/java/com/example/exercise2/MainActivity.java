@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     MyLocationListener mLocationListener;
     Interests interestsPage;
     MessageFragment messagePage;
+    ClockFragment clockPage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,12 +77,14 @@ public class MainActivity extends AppCompatActivity {
     private void initTabs(){
         fAdapter = new MyAdapter(getSupportFragmentManager());
         //页面，数据源
+        interestsPage=new Interests();
+        messagePage= new MessageFragment();
+        clockPage= new ClockFragment();
+
         list_fragment = new ArrayList<>();
         list_fragment.add(new PlaceHolder());
-        interestsPage=new Interests();
         list_fragment.add(interestsPage);
-        list_fragment.add(new PlaceHolder());
-        messagePage= new MessageFragment();
+        list_fragment.add(clockPage);
         list_fragment.add(messagePage);
         list_fragment.add(new PlaceHolder());
         list_title = new ArrayList<>();
@@ -95,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         //绑定
         tabLayout.setupWithViewPager(viewPager);
     }
+
 
     class MyAdapter extends FragmentPagerAdapter {
 
@@ -187,4 +192,5 @@ public class MainActivity extends AppCompatActivity {
             // do your work
         }
     }
+
 }
