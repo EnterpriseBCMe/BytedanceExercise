@@ -38,7 +38,6 @@ public class MessageFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_message, container, false);
         TextView contact = view.findViewById(R.id.contact);
-        Log.d("Debug",contact.getText().toString());
 
         contact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +91,6 @@ public class MessageFragment extends Fragment{
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Log.d("test1",String.valueOf(position)+"1");
             }
         });
         messageFlow.setAdapter(mAdapter);

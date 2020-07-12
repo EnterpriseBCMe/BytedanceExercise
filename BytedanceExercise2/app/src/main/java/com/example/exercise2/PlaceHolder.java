@@ -63,7 +63,6 @@ public class PlaceHolder extends Fragment {
                                 e.printStackTrace();
                             }
                             float progress=(float)seekBar.getProgress()/(float)seekBar.getMax();
-                            Log.d("progress",String.valueOf(progress));
                             lottieAnim.setProgress(progress);
                         }
                     }

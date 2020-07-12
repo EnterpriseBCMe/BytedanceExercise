@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#161824"
-    tools:context=".VideoPlayerFragment" >
+    tools:context=".BlankFragment">
+
     <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/avi"
         android:layout_width="wrap_content"
@@ -16,10 +16,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <com.example.exercise2.MyPlayer
-        android:id="@+id/video"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </com.example.exercise2.MyPlayer>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:visibility="invisible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

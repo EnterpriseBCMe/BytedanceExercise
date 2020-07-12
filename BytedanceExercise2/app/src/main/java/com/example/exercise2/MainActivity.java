@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     Interests interestsPage;
     MessageFragment messagePage;
     ClockFragment clockPage;
+    VideoPlayerFragment videoPage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         mLocationRequest.setRequestLevel(TencentLocationRequest. REQUEST_LEVEL_ADMIN_AREA);
         mLocationManager.requestLocationUpdates(mLocationRequest, mLocationListener);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -80,13 +83,14 @@ public class MainActivity extends AppCompatActivity {
         interestsPage=new Interests();
         messagePage= new MessageFragment();
         clockPage= new ClockFragment();
+        videoPage= new VideoPlayerFragment();
 
         list_fragment = new ArrayList<>();
-        list_fragment.add(new PlaceHolder());
+        list_fragment.add(videoPage);
         list_fragment.add(interestsPage);
         list_fragment.add(clockPage);
         list_fragment.add(messagePage);
-        list_fragment.add(new PlaceHolder());
+        list_fragment.add(new BlankFragment());
         list_title = new ArrayList<>();
         list_title.add("首页");
         list_title.add("关注");
