@@ -104,6 +104,18 @@ public class VideoPlayerFragment extends Fragment{
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        player.pause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        player.stop();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();

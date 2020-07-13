@@ -25,6 +25,7 @@ import android.view.OrientationEventListener;
 import android.widget.Toast;
 
 
+import com.example.exercise2.VideoPoster.VideoPosterFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     Interests interestsPage;
     MessageFragment messagePage;
     ClockFragment clockPage;
+    VideoPosterFragment videoPosterPage;
     VideoPlayerFragment videoPage;
 
     @Override
@@ -83,12 +85,13 @@ public class MainActivity extends AppCompatActivity {
         interestsPage=new Interests();
         messagePage= new MessageFragment();
         clockPage= new ClockFragment();
+        videoPosterPage = new VideoPosterFragment();
         videoPage= new VideoPlayerFragment();
 
         list_fragment = new ArrayList<>();
         list_fragment.add(videoPage);
         list_fragment.add(interestsPage);
-        list_fragment.add(clockPage);
+        list_fragment.add(videoPosterPage);
         list_fragment.add(messagePage);
         list_fragment.add(new BlankFragment());
         list_title = new ArrayList<>();
@@ -187,8 +190,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("locationlistener","获取位置失败,错误码:"+String.valueOf(error));
                 return;
             }
-            Log.d("location",location.getCity());
-            interestsPage.location.setText(location.getCity());
+            assert location != null;
+            //Log.d("location",location.getCity());
+            //interestsPage.location.setText(location.getCity());
         }
 
         @Override
