@@ -92,7 +92,7 @@ public class VideoPlayerFragment extends Fragment{
             Log.d(TAG,"no actionbar");
         mController.setMediaPlayer(player);
         player.setMediaController(mController);
-        player.setPath("http://39.96.72.171/src/1.mp4");
+        player.setPath("http://39.96.72.171/video/1.mp4");
         try {
             player.load();
         } catch (IOException e) {

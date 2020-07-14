@@ -20,4 +20,6 @@
     <string name="selectVideo">选择视频</string>
     <string name="postIt">上传</string>
     <string name="postSuccess">上传成功</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

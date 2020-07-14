@@ -2,6 +2,8 @@ package com.example.exercise2;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 
 
 import com.example.exercise2.VideoPoster.VideoPosterFragment;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.material.tabs.TabLayout;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
@@ -57,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Fresco.initialize(this);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mContext=this;
@@ -181,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     public class MyLocationListener extends Activity implements TencentLocationListener {
 
         @Override

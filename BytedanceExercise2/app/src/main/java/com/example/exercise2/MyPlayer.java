@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -16,8 +17,10 @@ import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
 
-import com.example.exercise2.widget.AndroidMediaController;
+import com.example.exercise2.widget.MySeekBar;
+import com.example.exercise2.widget.MyVideoController;
 
 import java.io.IOException;
 import java.util.Map;
@@ -44,7 +47,7 @@ public class MyPlayer extends FrameLayout implements MediaController.MediaPlayer
 
     private Context mContext;
     private boolean mEnableMediaCodec=true;
-
+    private MySeekBar mSeekBar;
     private MyVideoListener mListener;
     private AudioManager mAudioManager;
     private AudioFocusHelper mAudioFocusHelper;
@@ -70,13 +73,23 @@ public class MyPlayer extends FrameLayout implements MediaController.MediaPlayer
         mContext = context;
         setBackgroundColor(Color.BLACK);
         createSurfaceView();
+        setVideoController();
         mAudioManager = (AudioManager)mContext.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioFocusHelper = new AudioFocusHelper();
     }
 
     //创建surfaceView
     private void createSurfaceView() {
+        mSeekBar = new MySeekBar(mContext);
         mSurfaceView = new SurfaceView(mContext);
+        mSeekBar.setVisibility(INVISIBLE);
+        mSurfaceView.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                mSeekBar.show();
+                return false;
+            }
+        });
         mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
@@ -95,11 +108,15 @@ public class MyPlayer extends FrameLayout implements MediaController.MediaPlayer
 
             }
         });
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT
+        LayoutParams surfaceViewParams = new LayoutParams(LayoutParams.MATCH_PARENT
                 , LayoutParams.MATCH_PARENT, Gravity.CENTER);
-//        mSurfaceView.setLayoutParams(layoutParams);
-        addView(mSurfaceView,0,layoutParams);
+        LayoutParams seekBarViewParams = new LayoutParams(LayoutParams.MATCH_PARENT
+                , LayoutParams.MATCH_PARENT, Gravity.CENTER);
+        addView(mSurfaceView,0,surfaceViewParams);
+        addView(mSeekBar,1,seekBarViewParams);
+        mSeekBar.bringToFront();
     }
+
 
     //创建一个新的player
     private IMediaPlayer createPlayer() {
@@ -138,6 +155,49 @@ public class MyPlayer extends FrameLayout implements MediaController.MediaPlayer
     private void setListener(IMediaPlayer player){
         player.setOnPreparedListener(mPreparedListener);
         player.setOnVideoSizeChangedListener(mVideoSizeChangedListener);
+    }
+
+    public void setVideoController(){
+        mSeekBar.setVideoController(new MyVideoController() {
+            @Override
+            public void onPlay() {
+                start();
+            }
+
+            @Override
+            public void onPause() {
+                pause();
+            }
+
+            @Override
+            public void onStop() {
+                stop();
+            }
+
+            @Override
+            public void onFullScreen() {
+
+            }
+
+            @Override
+            public void onExitFullScreen() {
+
+            }
+
+            @Override
+            public void onSeek(float i) {
+                seekTo((int)(i*(float)mMediaPlayer.getDuration()));
+            }
+            @Override
+            public void onStopUpdateProgress() {
+
+            }
+
+            @Override
+            public void onResumeUpdateProgress() {
+
+            }
+        });
     }
 
     /**
@@ -186,9 +246,28 @@ public class MyPlayer extends FrameLayout implements MediaController.MediaPlayer
                 }
                 FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(w,h);
                 lp.gravity=Gravity.CENTER;
+                mSeekBar.setLayoutParams(lp);
                 mSurfaceView.setLayoutParams(lp);
             }
         });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    mSeekBar.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mSeekBar.setTime(mMediaPlayer.getCurrentPosition(),mMediaPlayer.getDuration());
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     public void start() {
