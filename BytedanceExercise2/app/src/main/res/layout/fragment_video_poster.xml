@@ -1,13 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vf_cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VideoPoster.VideoPosterFragment">
 
-    <Button
-        android:id="@+id/postIt"
+    <TextView
+        android:id="@+id/vf_timertext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/selectImage" />
-</FrameLayout>
+        android:textColor="#FFFFFF"
+        android:textSize="100sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/vf_timerset"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/timer_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/vf_upload"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/timer_0" />
+
+    <ImageView
+        android:id="@+id/vf_upload"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/upload"
+        app:layout_constraintEnd_toStartOf="@+id/vf_timerset"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/vf_flash"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/vf_flash"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/flash_auto"
+        app:layout_constraintEnd_toStartOf="@+id/vf_upload"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/vf_changemod"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="45dp"
+        android:src="@drawable/takevideo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/vf_takephoto"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/vf_togglelens"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="45dp"
+        android:src="@drawable/togglglengs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vf_takephoto" />
+
+    <ImageView
+        android:id="@+id/vf_takephoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/takephotoselector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.camera.view.CameraView
+        android:id="@+id/vf_camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-32dp"
+        tools:layout_editor_absoluteY="0dp">
+
+    </androidx.camera.view.CameraView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

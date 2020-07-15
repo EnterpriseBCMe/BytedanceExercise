@@ -39,3 +39,26 @@
 * 受限于阿里云带宽,视频可能加载很慢,尽量不要经常拉进度条,如果拉了会立刻卡住,需要等一下
 * 缓冲/暂停动画未实装
 * 横竖屏以及全屏功能非常遗憾,尚未实装
+
+# Exercise8
+
+### 使用方式
+
+* 摄像机界面在第三个页面,即画着+号的tab
+
+* 实现了拍照,录像,闪光灯,前后置摄像头切换,延时摄影功能,自动对焦功能
+* 中间按钮是拍照/录像按钮
+* 左下按钮是切换录像和拍照模式的按钮
+* 右下按钮是切换前后置摄像头的按钮
+* 左上可以切换闪光灯状态,有开启,自动,关闭,默认自动
+* 右上可以切换延时,有无延时,3s,5s,10s,最上方的上传按钮尚未实装
+* 分段录制尚未实装
+
+### 技术细节
+
+* 自定义相机使用Androidx(即Camerax)的CameraView
+* CameraView的lifecycle与+号fragment绑定
+* 延时摄影使用了单独的thread
+
+* 照片与视频放在content://media/external/file之中
+* **可能因为CameraView内部的BindLifeCycle相关设置原因,移动到其他fragment再移动回来会因CameraView内部重复绑定了过多的ImageCapture或VideoCapture的UseCase(均为CameraView内部预设UseCase),这会抛出一个IllegalArgumentException异常并使程序退出,该问题目前暂未解决**
