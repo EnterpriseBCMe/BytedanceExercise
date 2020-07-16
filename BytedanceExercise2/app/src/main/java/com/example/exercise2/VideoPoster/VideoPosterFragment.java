@@ -191,28 +191,11 @@ public class VideoPosterFragment extends Fragment {
             }
         });
         //TODO 完成图片上传
-        /*
-        uploadCloud.setOnClickListener(v -> {
-            String s = postIt.getText().toString();
-            if (getString(R.string.selectImage).equals(s)) {
-                chooseImage();
-            } else if (getString(R.string.selectVideo).equals(s)) {
-                chooseVideo();
-            } else if (getString(R.string.postIt).equals(s)) {
-                if (mSelectedVideo != null && mSelectedImage != null) {
-                    postVideo();
-                } else {
-                    throw new IllegalArgumentException("error data uri, mSelectedVideo = "
-                            + mSelectedVideo
-                            + ", mSelectedImage = "
-                            + mSelectedImage);
-                }
-            } else if ((getString(R.string.postSuccess).equals(s))) {
-                postIt.setText(R.string.selectImage);
-            }
-        });
 
-         */
+        uploadCloud.setOnClickListener(v -> {
+            chooseImage();
+
+        });
         takePhoto = mView.findViewById(R.id.vf_takephoto);
         takePhoto.setOnClickListener(takePhotoListener);
         changeMod = mView.findViewById(R.id.vf_changemod);
@@ -325,7 +308,7 @@ public class VideoPosterFragment extends Fragment {
                         Log.d(TAG, "Image capture scanned into media store: $uri"+uri));
     }
     //TODO 完成图片上传
-/*
+
     public void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -356,19 +339,25 @@ public class VideoPosterFragment extends Fragment {
             if (requestCode == PICK_IMAGE) {
                 mSelectedImage = data.getData();
                 Log.d(TAG, "selectedImage = " + mSelectedImage);
-                postIt.setText(R.string.selectVideo);
+                chooseVideo();
+
             } else if (requestCode == PICK_VIDEO) {
                 mSelectedVideo = data.getData();
                 Log.d(TAG, "mSelectedVideo = " + mSelectedVideo);
-                postIt.setText(R.string.postIt);
-            }
+                if (mSelectedVideo != null && mSelectedImage != null) {
+                    postVideo();
+                } else {
+                    throw new IllegalArgumentException("error data uri, mSelectedVideo = "
+                            + mSelectedVideo
+                            + ", mSelectedImage = "
+                            + mSelectedImage);
+                }            }
         }
     }
 
     private void postVideo() {
 
-        postIt.setText("POSTING...");
-        postIt.setEnabled(false);
+        Toast.makeText(getContext(),"选择完成,正在上传",Toast.LENGTH_SHORT);
         MultipartBody.Part coverImagePart = getMultipartFromUri("cover_image", mSelectedImage);
         MultipartBody.Part videoPart = getMultipartFromUri("video", mSelectedVideo);
         mService.postVideo("Entp", "syh", coverImagePart, videoPart).enqueue(
@@ -379,14 +368,11 @@ public class VideoPosterFragment extends Fragment {
                             Toast.makeText(getActivity(), response.body().toString(), Toast.LENGTH_SHORT)
                                     .show();
                         }
-                        postIt.setText(R.string.selectImage);
-                        postIt.setEnabled(true);
+                        Toast.makeText(getContext(),"上传成功",Toast.LENGTH_SHORT);
                     }
 
                     @Override
                     public void onFailure(Call<PostVideoResponse> call, Throwable throwable) {
-                        postIt.setText(R.string.selectImage);
-                        postIt.setEnabled(true);
                         Toast.makeText(getActivity(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -400,7 +386,6 @@ public class VideoPosterFragment extends Fragment {
         return MultipartBody.Part.createFormData(name, f.getName(), requestFile);
     }
 
- */
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -11,10 +11,6 @@
 * 下面的动画是animeset
 * tablayout+pageviewr实现下方选项卡
 
-# Exercise4
-
-* 要求的作业在最中间的选项卡里(就是"+"号,拍摄新视频的地方)
-
 # Exercise7
 
 ### 图片作业
