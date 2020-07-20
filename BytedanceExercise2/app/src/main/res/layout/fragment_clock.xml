@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".ClockFragment">
 
-    <com.example.exercise2.ClockView
+    <com.example.MiniTiktok.ClockView
         android:id="@+id/clockView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

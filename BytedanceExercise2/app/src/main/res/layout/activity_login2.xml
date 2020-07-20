@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#161824"
+    tools:context=".LoginActivity2">
+
+
+    <include
+        android:id="@+id/main_title"
+        layout="@layout/title_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/login_layout"
+        android:layout_below="@+id/main_title"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="84dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="DuoyinLogo"
+            android:src="@drawable/douyin_logo" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="DuoyinMotto"
+            android:src="@drawable/douyin_motto" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <include
+            android:id="@+id/input_layout"
+            layout="@layout/input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="130dip" />
+
+        <include
+            android:id="@+id/layout_progress"
+            layout="@layout/layout_progress"
+            android:layout_width="match_parent"
+            android:layout_height="130dip"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/main_btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/input_layout"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="15dip"
+            android:background="@drawable/text_bg"
+            android:gravity="center"
+            android:paddingLeft="15dip"
+            android:paddingTop="2dip"
+            android:paddingRight="15dip"
+            android:paddingBottom="2dip"
+            android:text="Login"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+</RelativeLayout>
+

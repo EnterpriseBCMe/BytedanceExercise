@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.exercise2">
+    package="com.example.MiniTiktok">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 通过网络得到粗略位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 访问网络. 某些位置信息需要从网络服务器获取 -->
@@ -14,30 +14,41 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <uses-feature android:name="android.hardware.camera.any" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/applogo"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
 
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Player.PlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_player"
+            android:theme="@style/FullscreenTheme"></activity>
         <activity android:name=".TesterActivity" />
-        <activity android:name=".InterestsDeteil" />
+        <activity android:name=".Interests.InterestsDeteil" />
         <activity android:name=".MessageDetail" />
+        <activity android:name=".LoginService.LoginActivity2"/>
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
+
         </activity>
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppTheme.Full">
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data

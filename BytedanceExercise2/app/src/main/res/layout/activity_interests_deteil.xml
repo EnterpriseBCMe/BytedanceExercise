@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#161824"
-    tools:context=".InterestsDeteil">
+    tools:context=".Interests.InterestsDeteil">
 
     <TextView
         android:id="@+id/textView"
